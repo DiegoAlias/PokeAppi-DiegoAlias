@@ -15,7 +15,7 @@ public class MovimientoBach implements Database.Batchable<sObject>,Database.Allo
         if(movimiento!=null){
             insert movimiento;
         }
-    }//va insertando los habilidadmones
+    }
 
     public void finish(Database.BatchableContext bc){
         System.debug('Batch terminado');

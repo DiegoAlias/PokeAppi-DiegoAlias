@@ -1,0 +1,58 @@
+<template>
+	<div style="background-color: #1C2833;" class="slds-container_x-large slds-container_center slds-box">
+		<template if:true={pokemons.data}>
+			<div class="slds-grid slds-p-around_small slds-align_absolute-center">
+				<div class="slds-size_1-of-3 slds-align_absolute-center">
+					<div class="slds-box slds-size_medium">
+						<div class="slds-text-heading_medium slds-p-around_x-small slds-align_absolute-center" style="color:white;">
+							Nombre
+						</div>
+						<lightning-input type="search" onchange={handleSearchTermChange} variant="label-hidden"
+							class="slds-size_small slds-align_absolute-center" placeholder="Buscar" value={searchTerm}>
+						</lightning-input>
+					</div>
+				</div>
+				<div class="slds-size_1-of-3 slds-align_absolute-center">
+					<div class="slds-box slds-size_medium">
+						<div class="slds-text-heading_medium slds-p-around_x-small slds-align_absolute-center" style="color:white;">
+							Generacíon</div>
+						<lightning-combobox value={value2} options={optionsGen} variant="label-hidden"
+							class="slds-size_small slds-align_absolute-center" onchange={handleChangeGen}>
+						</lightning-combobox>
+					</div>
+				</div>
+				<div class="slds-size_1-of-3 slds-align_absolute-center">
+					<div class="slds-box slds-size_medium">
+						<div class="slds-text-heading_medium slds-p-around_x-small slds-align_absolute-center" style="color:white;">
+							Tipo</div>
+						<lightning-combobox value={value1} variant="label-hidden" class="slds-size_small slds-align_absolute-center"
+							options={optionsTipo} onchange={handleChangeTipo}>
+						</lightning-combobox>
+					</div>
+				</div>
+			</div>
+			<div class="slds-text-heading_medium slds-box slds-align_absolute-center slds-size_x-small" style="color:white;">
+				Pokemones: {pokemons.data.length}
+			</div>
+			<lightning-layout multiple-rows="true" pull-to-boundary="small"
+				class="slds-container_x-large slds-align_absolute-center slds-box">
+				<template for:each={pokemons.data} for:item="pokemon">
+					<lightning-layout-item key={pokemon.Id} size="2" class="slds-p-around_x-small">
+						<c-pokemon-tile pokemon={pokemon} onpokemonview={handlePokemonView} class="slds-p-around_x-small">>
+						</c-pokemon-tile>
+					</lightning-layout-item>
+				</template>
+			</lightning-layout>
+			<template if:false={hasResults}>
+				<div class="slds-align_absolute-center slds-var-m-vertical_small" style="color:white; padding-bottom: 5px;">
+					No hay pokemones con esas caracteristicas...
+				</div>
+			</template>
+		</template>
+		<template if:true={pokemons.error}>
+			<div class="slds-text-color_error">
+				Ha ocurrido un error inesperado...
+			</div>
+		</template>
+	</div>
+</template>

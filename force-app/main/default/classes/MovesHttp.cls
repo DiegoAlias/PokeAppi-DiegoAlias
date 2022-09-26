@@ -17,17 +17,22 @@ public with sharing class MovesHttp {
             system.debug('el status de la llamada fue'+response.getStatusCode());
             return null;
         }
-
-        
     }
-
 
     public static Movimiento__c devolverMovimiento(Movimientos m){
 
         Movimiento__c mov = new Movimiento__c();
-
-         
+		
+        mov.Name = m.name;
+        mov.ExtId__c = m.id;
+        mov.Punteria__c = String.valueOf(m.accuracy);
+        mov.Chance_de_Efecto__c = String.valueOf(m.effect_chance);
+        mov.Objetivo__c = m.target.name;
+        mov.Prioridad__c = String.valueOf(m.priority);
+        mov.Efecto__c = m.effect_entries.get(0).short_effect;
+        mov.Poder__c = String.valueOf(m.power);
+        mov.Pp__c = String.valueOf(m.pp);
+ 
         return mov;
     }
-
 }

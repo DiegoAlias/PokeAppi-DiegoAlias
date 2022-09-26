@@ -1,0 +1,14 @@
+<template>
+
+	<div onclick={handleOpenRecordClick} class="pokemon-tile">
+		<h2 class="slds-align_absolute-center slds-text-title_bold">
+			{pokemon.Name}
+		</h2>
+		<img src={pokemon.Foto_URL__c} class="slds-align_absolute-center pokemon-img" />
+		<p class="slds-align_absolute-center">Tipo: {pokemon.Tipo__c}</p>
+		<p class="slds-align_absolute-center">Generacíon: {pokemon.Generacion__c}</p>
+		<p class="slds-align_absolute-center">Altura: {pokemon.Altura__c} </p>
+		<p class="slds-align_absolute-center">Peso: {pokemon.Peso__c} </p>
+		<p class="slds-align_absolute-center">pokeIndex: {pokemon.PokeIndex__c}</p>
+	</div>
+</template>
