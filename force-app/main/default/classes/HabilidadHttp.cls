@@ -25,8 +25,10 @@ public with sharing class HabilidadHttp {
 		
         hab.Name = h.name;
         hab.ExtId__c = h.id;
-        hab.Efecto__c = h.effect_entries.get(0).short_effect;
+        hab.Efecto__c = h.effect_entries.isEmpty() ? 'None' : (h.id < 191)
+                 											? h.effect_entries[1].short_effect : h.effect_entries[0].short_effect;
         
+       
         return hab;
     }
 }

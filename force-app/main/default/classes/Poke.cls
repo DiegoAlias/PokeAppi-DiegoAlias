@@ -75,4 +75,3 @@ public with sharing class Poke {
             return (Poke) System.JSON.deserialize(json, Poke.class);
         }
 }
-

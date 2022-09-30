@@ -1,12 +1,12 @@
 import { NavigationMixin } from 'lightning/navigation';
 import { LightningElement, wire } from 'lwc';
 /** PokemonController.searchPokemons(searchTerm) Apex method */
-import searchPokemons from '@salesforce/apex/PokeController.searchPokemons';
+import searchPokemons from '@salesforce/apex/PokemController.searchPokemons';
 export default class PokemonList extends NavigationMixin(LightningElement) {
 	searchTerm = '';
-	gen = 0;
-	tipo = ';';
-	@wire(searchPokemons, { searchTerm: '$searchTerm', gen: '$gen', tipo: '$tipo' }) pokemons;
+	generacion = 0;
+	tipo = 'Todos';
+	@wire(searchPokemons, { searchTerm: '$searchTerm', generacion: '$generacion', tipo: '$tipo' }) pokemons;
 
 	handleSearchTermChange (event) {
 		window.clearTimeout(this.delayTimeout);
@@ -27,16 +27,17 @@ export default class PokemonList extends NavigationMixin(LightningElement) {
 		})
 	}
 	get getTipo () {
-		return (this.tipo == ';')
+		return (this.tipo == 'Todos')
 	}
 	get getGen () {
-		return (this.gen == '0')
+		return (this.generacion == '0')
 	}
 	get hasResults () {
+		console.log(this.pokemons);
 		return (this.pokemons.data.length > 0);
 	}
 
-	value2 = '0';
+	//value2 = '0';
 	get optionsGen () {
 		return [
 			{ label: 'Todos', value: '0' },
@@ -53,13 +54,13 @@ export default class PokemonList extends NavigationMixin(LightningElement) {
 
 	handleChangeGen (event) {
 		this.value2 = event.detail.value;
-		this.gen = event.detail.value;
+		this.generacion = event.detail.value;
 	}
 
-	value1 = ';';
+	//value1 = 'Todos';
 	get optionsTipo () {
 		return [
-			{ label: 'Todos', value: ';' },
+			{ label: 'Todos', value: 'Todos' },
 			{ label: 'Normal', value: 'Normal' },
 			{ label: 'Fighting', value: 'Fighting' },
 			{ label: 'Flying', value: 'Flying' },
@@ -85,4 +86,13 @@ export default class PokemonList extends NavigationMixin(LightningElement) {
 		this.value1 = event.detail.value;
 		this.tipo = event.detail.value;
 	}
+
+	handleChangeTipo(event) {
+		window.clearTimeout(this.delayTimeout);
+		const tipo = event.target.value;
+		//eslint-disable-next-line @lwc/lwc/no-async-operation
+		this.delayTimeout = setTimeout(() => {
+		  this.tipo = tipo;
+		}, 300);
+	  }
 }

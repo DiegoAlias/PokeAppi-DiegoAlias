@@ -8,4 +8,3 @@ export default class PokemonTile extends LightningElement {
         this.dispatchEvent(selectEvent);
     }
 }
-pokemon.Tipo__c.replace(';', ' & ')

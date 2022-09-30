@@ -21,47 +21,81 @@ public with sharing class PokeHttp {
         
     }
 
-    public static Pokemon__c devolverPokemon(Poke Pk){
-        Pokemon__c poke = new Pokemon__c();
-        poke.Name = Pk.name;
-        poke.ExtId__c = Pk.id;
-        poke.Altura__c = Pk.height;
-        poke.Peso__c = Pk.weight;
-        poke.Imagen__c = Pk.sprites.front_default;
-        poke.Vida__c = String.valueOf(Pk.stats.get(0).base_stat);
-        poke.Ataque__c = String.valueOf(Pk.stats.get(1).base_stat);
-        poke.Defensa__c = String.valueOf(Pk.stats.get(2).base_stat);
-        poke.Velocidad__c = String.valueOf(Pk.stats.get(5).base_stat);
+    public static Pokemon__c devolverPokemon(Poke pok){
+       Pokemon__c pk1 = new Pokemon__c();
+        pk1.ExtId__c = pok.id;
+             pk1.Name = pok.name;
+             pk1.Altura__c = pok.height;
+             pk1.Numero_de_Pokemon__c = pok.order;
+             pk1.Imagen__c = pok.sprites.front_default;   
+             pk1.Peso__c = pok.weight; 
+            
+             for (Integer i = 0; i <= 4; i++) {
+                 try {
+                     if(i == 0){
+                         pk1.Tipos__c = pok.types.get(i).type.name;
+                     }else{
+                         pk1.Tipos__c = pk1.Tipos__c + ';'+pok.types.get(i).type.name;
+                     }
+                 } catch (Exception e) {
+                     break;
+                 }               
+             } 
+             
+           //CREO VARIABLE PARA HABILIDADES ALEATORIAS
+           Integer aleatorioHabilidad  = Integer.valueof((Math.random() * pok.abilities.Size()));
+         	String habilidad = pok.abilities.get(aleatorioHabilidad).ability.name;  
+             try{
+                 	pk1.Habilidad__c = [select Id from Habilidad__c where Name=:habilidad LIMIT 1].Id;
+             }catch(System.QueryException e){
+                 system.debug(e);
+             }
+          //CREO metodo try catch para que no largue error, el error que salia es que en el campo velocidad estaba fuera de los limites List index out of bounds: 5
         
-      	for (Integer i=0; i <= Pk.types.Size(); i++){
-            if (i == 0){
-                poke.Tipos__c = Pk.types.get(0).type.name;
-            }
-            else{
-                poke.Tipos__c = poke.Tipos__c + ';' + Pk.types.get(i).type.name;
-            }
+        if(pok.stats.get(0).base_stat != Null){
+             pk1.Vida__c = String.valueOf(pok.stats.get(0).base_stat);
         }
         
-        Integer aleatorio = Integer.valueof((Math.random() * Pk.moves.Size()));
-        String x = Pk.moves.get(aleatorio).move.name;
-        poke.Slot1__c = [SELECT Id FROM Movimiento__c WHERE Name = :x ].Id;
+        if(pok.stats.get(1).base_stat != Null){
+        	 pk1.Ataque__c = String.valueOf(pok.stats.get(1).base_stat);
+ 
+        }
         
-        aleatorio = Integer.valueof((Math.random() * Pk.moves.Size()));
-        x = Pk.moves.get(aleatorio).move.name;
-        poke.Slot2__c = [SELECT Id FROM Movimiento__c WHERE Name = :x ].Id;
+        if(pok.stats.get(2).base_stat != Null){
+             pk1.Defensa__c = String.valueOf(pok.stats.get(2).base_stat);
+        }
         
-        aleatorio = Integer.valueof((Math.random() * Pk.moves.Size()));
-        x = Pk.moves.get(aleatorio).move.name;
-        poke.Slot3__c = [SELECT Id FROM Movimiento__c WHERE Name = :x ].Id;
+        if(pok.stats.get(5).base_stat!= Null){
+            pk1.Velocidad__c = String.valueOf(pok.stats.get(5).base_stat);
+        }
+                    
+            	
+            
+  			
+           
+            //CREO VARIABLE PARA MOVIMIENTOS ALEATORIAS
+            try{
+            Integer aleatorio = Integer.valueof((Math.random() * pok.moves.Size()));
+            String movimiento = pok.moves.get(aleatorio).move.name;  
+           pk1.Slot1__c = [select Id from Movimiento__c where Name=:movimiento LIMIT 1].Id;
+           aleatorio = Integer.valueof((Math.random() * pok.moves.Size()));
+		   movimiento = pok.moves.get(aleatorio).move.name;  
+           pk1.Slot2__c = [select Id from Movimiento__c where Name=:movimiento].Id;
         
-        aleatorio = Integer.valueof((Math.random() * Pk.moves.Size()));
-        x = Pk.moves.get(aleatorio).move.name;
-        poke.Slot4__c = [SELECT Id FROM Movimiento__c WHERE Name = :x ].Id;
+            aleatorio = Integer.valueof((Math.random() * pok.moves.Size()));
+           movimiento = pok.moves.get(aleatorio).move.name;  
+            pk1.Slot3__c = [select Id from Movimiento__c where Name=:movimiento].Id;
         
-        aleatorio = Integer.valueof((Math.random() * Pk.abilities.Size()));
-        x = Pk.abilities.get(aleatorio).ability.name;
-        poke.Habilidad__c = [SELECT Id FROM Habilidad__c WHERE Name = :x ].Id;
-        
-        return poke;
-    }
+            aleatorio = Integer.valueof((Math.random() * pok.moves.Size()));
+            movimiento = pok.moves.get(aleatorio).move.name;  
+            pk1.Slot4__c = [select Id from Movimiento__c where Name=:movimiento].Id;
+             
+        }catch(System.NullPointerException e){
+                 System.debug(e);
+             }
+       
+ 	           
+             System.debug('Tu pokemon es: '+pk1);      
+             return pk1;  
+         }
 }

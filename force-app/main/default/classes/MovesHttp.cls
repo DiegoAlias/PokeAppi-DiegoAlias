@@ -19,20 +19,28 @@ public with sharing class MovesHttp {
         }
     }
 
-    public static Movimiento__c devolverMovimiento(Movimientos m){
+    public static Movimiento__c devolverMovimiento(Movimientos mov){
 
-        Movimiento__c mov = new Movimiento__c();
-		
-        mov.Name = m.name;
-        mov.ExtId__c = m.id;
-        mov.Punteria__c = String.valueOf(m.accuracy);
-        mov.Chance_de_Efecto__c = String.valueOf(m.effect_chance);
-        mov.Objetivo__c = m.target.name;
-        mov.Prioridad__c = String.valueOf(m.priority);
-        mov.Efecto__c = m.effect_entries.get(0).short_effect;
-        mov.Poder__c = String.valueOf(m.power);
-        mov.Pp__c = String.valueOf(m.pp);
- 
-        return mov;
+        Movimiento__c move = new Movimiento__c();
+             
+            move.Name = mov.name == null ? 'No Name' : mov.name;
+            
+            move.ExtId__c = mov.id == null ? 0 : mov.id;
+            
+            move.Punteria__c = mov.accuracy == null ? 'None' : String.valueOf(mov.accuracy);             
+            
+            move.Chance_de_Efecto__c = mov.effect_chance == null ? 'None' : mov.effect_chance;
+            
+            move.Efecto__c = mov.effect_entries.isEmpty() ? 'No Effect' : mov.effect_entries[0].short_effect;
+            
+            move.Poder__c = mov.power == null ? 'None' : String.valueOf(mov.power);
+            
+            move.Pp__c = mov.pp == null ? 'None' : String.valueOf(mov.pp);
+            
+            move.Prioridad__c = mov.priority == null ? 'None' : String.valueOf(mov.priority);
+            
+            move.Tipo__c = mov.type.name == null ? 'None' : mov.type.name.capitalize();
+			
+            return move;
     }
 }

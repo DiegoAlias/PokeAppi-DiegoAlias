@@ -12,8 +12,13 @@ public class HabilidadBatch implements Database.Batchable<sObject>,Database.Allo
         
         integer var1=integer.valueOf(records[0].ExtId__c);
         Habilidad__c habilidad = HabilidadHttp.traerHabilidad(var1);
-        if(habilidad!=null){
+        try{
+            if(habilidad!=null){
             insert habilidad;
+        }
+           
+        }catch(Exception e){
+            
         }
     }
 
