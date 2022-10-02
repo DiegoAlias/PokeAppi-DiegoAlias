@@ -6,7 +6,7 @@ public with sharing class PokemController {
       searchTerm = searchTerm.trim();
       searchTerm = '%' + searchTerm + '%';
 
-      String query = 'SELECT Id, Name, Generacion__c, Tipos__c, Altura__c, Peso__c,  Imagen__c, ExtId__c  FROM Pokemon__c ';
+      String query = 'SELECT Id, Name, Generacion__c, Tipos__c, Altura__c, Peso__c,  Imagen__c, ExtId__c  FROM Pokemon__c';
       
           if (searchTerm != '') {
           query += ' WHERE Name LIKE :searchTerm ';

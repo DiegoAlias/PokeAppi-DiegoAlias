@@ -59,6 +59,7 @@ public with sharing class Poke {
     
         public class cls_sprites {
             public String front_default;	//https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/56.png
+            //"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/135.png"
         }
         
         public class cls_types {

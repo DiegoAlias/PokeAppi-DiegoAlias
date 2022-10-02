@@ -69,23 +69,20 @@ public with sharing class PokeHttp {
             pk1.Velocidad__c = String.valueOf(pok.stats.get(5).base_stat);
         }
                     
-            	
-            
-  			
-           
+     
             //CREO VARIABLE PARA MOVIMIENTOS ALEATORIAS
             try{
             Integer aleatorio = Integer.valueof((Math.random() * pok.moves.Size()));
             String movimiento = pok.moves.get(aleatorio).move.name;  
-           pk1.Slot1__c = [select Id from Movimiento__c where Name=:movimiento LIMIT 1].Id;
-           aleatorio = Integer.valueof((Math.random() * pok.moves.Size()));
-		   movimiento = pok.moves.get(aleatorio).move.name;  
-           pk1.Slot2__c = [select Id from Movimiento__c where Name=:movimiento].Id;
-        
+            pk1.Slot1__c = [select Id from Movimiento__c where Name=:movimiento LIMIT 1].Id;
             aleatorio = Integer.valueof((Math.random() * pok.moves.Size()));
-           movimiento = pok.moves.get(aleatorio).move.name;  
+            movimiento = pok.moves.get(aleatorio).move.name;  
+            pk1.Slot2__c = [select Id from Movimiento__c where Name=:movimiento].Id;
+            
+            aleatorio = Integer.valueof((Math.random() * pok.moves.Size()));
+            movimiento = pok.moves.get(aleatorio).move.name;  
             pk1.Slot3__c = [select Id from Movimiento__c where Name=:movimiento].Id;
-        
+            
             aleatorio = Integer.valueof((Math.random() * pok.moves.Size()));
             movimiento = pok.moves.get(aleatorio).move.name;  
             pk1.Slot4__c = [select Id from Movimiento__c where Name=:movimiento].Id;
